@@ -12,16 +12,16 @@
 <body>
 
 <!-- Tab Navigation -->
-<nav class="tab-nav" id="tabNav">
-  <button class="tab-btn active" data-tab="dashboard">行情看板</button>
-  <button class="tab-btn" data-tab="advice">买卖建议</button>
-  <button class="tab-btn" data-tab="pnl">盈亏追踪</button>
-  <button class="tab-btn" data-tab="calendar">事件日历</button>
-  <button class="tab-btn" data-tab="ai">AI 分析</button>
+<nav class="tab-nav" id="tabNav" role="tablist">
+  <button class="tab-btn active" data-tab="dashboard" role="tab" aria-selected="true">行情看板</button>
+  <button class="tab-btn" data-tab="advice" role="tab" aria-selected="false">买卖建议</button>
+  <button class="tab-btn" data-tab="pnl" role="tab" aria-selected="false">盈亏追踪</button>
+  <button class="tab-btn" data-tab="calendar" role="tab" aria-selected="false">事件日历</button>
+  <button class="tab-btn" data-tab="ai" role="tab" aria-selected="false">AI 分析</button>
 </nav>
 
 <!-- Tab 1: Dashboard -->
-<div class="tab-content active" id="tab-dashboard">
+<div class="tab-content active" id="tab-dashboard" role="tabpanel">
   <div class="toolbar">
     <div class="toolbar-left">
       <span class="freshness fresh" id="freshnessBadge">数据加载中...</span>
@@ -72,12 +72,12 @@
 </div>
 
 <!-- Tab 2: Advice -->
-<div class="tab-content" id="tab-advice">
+<div class="tab-content" id="tab-advice" role="tabpanel">
   <div class="stats-row" id="adviceStats"></div>
   <div class="config-bar" id="adviceConfig">
     <span style="color:var(--text-bright);font-weight:600;">提醒阈值</span>
     <span>当价格偏离均线超过</span>
-    <input type="number" id="thresholdPct" value="15" min="1" max="50" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--text-bright);font-size:12px;">
+    <input type="number" id="thresholdPct" value="15" min="1" max="50" class="config-input-num">
     <span>% 时弹出通知</span>
     <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
       <input type="checkbox" id="alertBuy" checked> 买入提醒
@@ -106,24 +106,28 @@
 </div>
 
 <!-- Tab 3: P&L -->
-<div class="tab-content" id="tab-pnl">
+<div class="tab-content" id="tab-pnl" role="tabpanel">
   <div class="config-bar" id="taxConfig">
     <span style="color:var(--text-bright);font-weight:600;">税费设置</span>
     <span>保证金</span>
-    <input type="number" id="depositRate" value="3" min="0" max="20" step="0.5" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:12px;">
+    <input type="number" id="depositRate" value="3" min="0" max="20" step="0.5" class="config-input-num gold">
     <span>% + 手续费</span>
-    <input type="number" id="feeRate" value="10" min="0" max="30" step="0.5" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:12px;">
+    <input type="number" id="feeRate" value="10" min="0" max="30" step="0.5" class="config-input-num gold">
     <span>% = 综合</span>
     <span id="totalTaxRate" style="color:var(--red-bright);font-weight:600;">13%</span>
     <span style="margin-left:auto;color:var(--green);font-size:11px;">盈亏 = 税后到手 - 成本</span>
   </div>
   <div class="stats-row" id="pnlStats"></div>
-  <div style="display:flex; gap:8px; margin-bottom:14px; align-items:center;">
-    <button class="btn btn-primary" id="addBuyBtn">+ 记录买入</button>
-    <button class="btn btn-outline" id="addSellBtn">+ 记录卖出</button>
-    <span style="margin-left:auto;font-size:12px;cursor:pointer;color:var(--text-dim);" id="exportBtn">导出 JSON ▾</span>
-    <span style="font-size:12px;cursor:pointer;color:var(--text-dim);" id="importBtn">导入 JSON</span>
-    <input type="file" id="importFile" accept=".json" style="display:none;">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-primary" id="addBuyBtn">+ 记录买入</button>
+      <button class="btn btn-outline" id="addSellBtn">+ 记录卖出</button>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-outline btn-sm" id="exportBtn">导出 JSON ▾</button>
+      <button class="btn btn-outline btn-sm" id="importBtn">导入 JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none;">
+    </div>
   </div>
   <div class="panel">
     <div class="section-header">当前持仓</div>
@@ -163,7 +167,7 @@
 </div>
 
 <!-- Tab 4: Event Calendar -->
-<div class="tab-content" id="tab-calendar">
+<div class="tab-content" id="tab-calendar" role="tabpanel">
   <div class="toolbar">
     <div class="toolbar-left">
       <button class="btn btn-sm btn-outline" id="calPrevMonth">◀</button>
@@ -183,7 +187,7 @@
 </div>
 
 <!-- Tab 5: AI Analysis -->
-<div class="tab-content" id="tab-ai">
+<div class="tab-content" id="tab-ai" role="tabpanel">
   <div class="config-bar">
     <span style="color:var(--text-bright);font-weight:600;">API 设置</span>
     <span>Provider:</span>
@@ -219,16 +223,16 @@
 </div>
 
 <!-- Modals (hidden by default) -->
-<div class="modal-overlay" id="tradeModal">
+<div class="modal-overlay" id="tradeModal" role="dialog" aria-modal="true">
   <div class="modal-box">
     <h3 id="tradeModalTitle">记录交易</h3>
-    <label>物品名称</label>
+    <label for="tradeItemName">物品名称</label>
     <input type="text" class="input" id="tradeItemName" placeholder="输入物品名称...">
-    <label>数量</label>
+    <label for="tradeQty">数量</label>
     <input type="number" class="input" id="tradeQty" value="1" min="1">
-    <label>单价（哈夫币）</label>
+    <label for="tradePrice">单价（哈夫币）</label>
     <input type="number" class="input" id="tradePrice" placeholder="0">
-    <label>交易类型</label>
+    <label for="tradeType">交易类型</label>
     <select class="select" id="tradeType">
       <option value="buy">买入</option>
       <option value="sell">卖出</option>
@@ -240,14 +244,14 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="eventModal">
+<div class="modal-overlay" id="eventModal" role="dialog" aria-modal="true">
   <div class="modal-box">
     <h3 id="eventModalTitle">添加事件</h3>
-    <label>日期</label>
+    <label for="eventDate">日期</label>
     <input type="date" class="input" id="eventDate">
-    <label>标题</label>
+    <label for="eventTitle">标题</label>
     <input type="text" class="input" id="eventTitle" placeholder="事件标题...">
-    <label>事件类型</label>
+    <label for="eventType">事件类型</label>
     <select class="select" id="eventType">
       <option value="update">版本更新</option>
       <option value="season">赛季更替</option>
@@ -256,15 +260,15 @@
       <option value="restock">官方补货</option>
       <option value="other">其他</option>
     </select>
-    <label>影响描述</label>
+    <label for="eventDesc">影响描述</label>
     <input type="text" class="input" id="eventDesc" placeholder="对价格的影响...">
-    <label>预期涨跌</label>
+    <label for="eventImpact">预期涨跌</label>
     <select class="select" id="eventImpact">
       <option value="up">预期上涨</option>
       <option value="down">预期下跌</option>
       <option value="neutral">不确定</option>
     </select>
-    <label>影响幅度 %（可选）</label>
+    <label for="eventMagnitude">影响幅度 %（可选）</label>
     <input type="text" class="input" id="eventMagnitude" placeholder="如: 10-20">
     <div class="btn-row">
       <button class="btn btn-outline" id="eventCancel">取消</button>

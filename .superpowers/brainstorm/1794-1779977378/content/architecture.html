@@ -1,0 +1,78 @@
+<h2>整体架构</h2>
+<p class="subtitle">一个纯前端页面，直连第三方 API，零后端零成本</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:20px;">
+
+  <div class="mockup" style="grid-column:1/-1;">
+    <div class="mockup-header">数据流架构</div>
+    <div class="mockup-body" style="padding:24px;">
+      <div style="display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap;">
+        <div style="background:var(--color-bg); border:1px solid var(--color-border); border-radius:8px; padding:12px 20px; text-align:center;">
+          <strong style="color:var(--color-accent);">DeltaForcePrice</strong><br>
+          <span style="font-size:12px;color:var(--color-dim);">上游数据源</span><br>
+          <span style="font-size:11px;color:var(--color-dim);">每10分钟更新</span>
+        </div>
+        <span style="font-size:24px;margin:0 8px;color:var(--color-dim);">→</span>
+        <div style="background:var(--color-bg); border:1px solid var(--color-border); border-radius:8px; padding:12px 20px; text-align:center;">
+          <strong style="color:var(--color-accent);">delta-force-api</strong><br>
+          <span style="font-size:12px;color:var(--color-dim);">HTTP API</span><br>
+          <span style="font-size:11px;color:var(--color-dim);">JSON 格式</span>
+        </div>
+        <span style="font-size:24px;margin:0 8px;color:var(--color-dim);">→</span>
+        <div style="background:var(--color-bg); border:2px solid var(--color-accent); border-radius:8px; padding:16px 24px; text-align:center;">
+          <strong style="color:var(--color-accent);font-size:18px;">我们的前端页面</strong><br>
+          <span style="font-size:12px;color:var(--color-dim);">HTML + Vanilla JS + ECharts</span><br>
+          <span style="font-size:11px;color:var(--color-dim);">index.html 单文件</span>
+        </div>
+        <span style="font-size:24px;margin:0 8px;color:var(--color-dim);">⇄</span>
+        <div style="background:var(--color-bg); border:1px solid var(--color-border); border-radius:8px; padding:12px 16px; text-align:center;">
+          <strong style="color:var(--color-dim);">localStorage</strong><br>
+          <span style="font-size:11px;color:var(--color-dim);">盈亏/标记/配置</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">页面结构 (三 Tab)</div>
+    <div class="mockup-body" style="padding:16px;">
+      <div style="display:flex; gap:0; border-bottom:2px solid var(--color-accent); padding-bottom:8px; margin-bottom:16px;">
+        <div style="padding:8px 16px; background:var(--color-accent); color:#fff; border-radius:6px 6px 0 0; font-weight:600; font-size:13px;">行情看板</div>
+        <div style="padding:8px 16px; color:var(--color-dim); font-size:13px;">买卖建议</div>
+        <div style="padding:8px 16px; color:var(--color-dim); font-size:13px;">盈亏追踪</div>
+      </div>
+      <div style="font-size:13px; color:var(--color-dim);">
+        <div class="placeholder" style="height:120px;">物品价格表格 + 涨跌幅</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">核心功能模块</div>
+    <div class="mockup-body" style="padding:16px; font-size:13px;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:6px 8px; font-weight:600; color:var(--color-bright);">数据层</td>
+          <td style="padding:6px 8px; color:var(--color-dim);">定时拉取 API，存入内存缓存</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:6px 8px; font-weight:600; color:var(--color-bright);">显示层</td>
+          <td style="padding:6px 8px; color:var(--color-dim);">ECharts 走势图 + 排序表格</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:6px 8px; font-weight:600; color:var(--color-bright);">逻辑层</td>
+          <td style="padding:6px 8px; color:var(--color-dim);">价差计算、异常检测、交易提醒</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:6px 8px; font-weight:600; color:var(--color-bright);">存储层</td>
+          <td style="padding:6px 8px; color:var(--color-dim);">localStorage 持久化 + JSON 导出</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 8px; font-weight:600; color:var(--color-bright);">部署</td>
+          <td style="padding:6px 8px; color:var(--color-dim);">Cloudflare Pages / Vercel</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>

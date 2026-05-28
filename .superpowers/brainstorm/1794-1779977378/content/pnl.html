@@ -1,0 +1,161 @@
+<h2>盈亏追踪 — 页面布局</h2>
+<p class="subtitle">记录每笔买卖，算清赚了多少亏了多少</p>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">盈亏追踪 Tab</div>
+  <div class="mockup-body" style="padding:20px; background:#0a0b0e;">
+
+    <!-- Summary cards -->
+    <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:120px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:11px; color:#999;">持仓物品</div>
+        <div style="font-size:28px; font-weight:700; color:#f0f0f0;">8</div>
+      </div>
+      <div style="flex:1; min-width:120px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:11px; color:#999;">总成本</div>
+        <div style="font-size:28px; font-weight:700; color:#f0f0f0;">186,500</div>
+      </div>
+      <div style="flex:1; min-width:120px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:11px; color:#999;">当前市值</div>
+        <div style="font-size:28px; font-weight:700; color:#4ade80;">211,000</div>
+      </div>
+      <div style="flex:1; min-width:120px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:11px; color:#999;">浮盈</div>
+        <div style="font-size:28px; font-weight:700; color:#4ade80;">+24,500</div>
+        <div style="font-size:11px; color:#4ade80;">+13.1%</div>
+      </div>
+    </div>
+
+    <!-- Add trade button -->
+    <div style="display:flex; gap:8px; margin-bottom:16px; align-items:center;">
+      <button class="mock-button" style="padding:8px 20px; font-size:13px; background:#e63946; color:#fff; border:none; border-radius:6px;">+ 记录买入</button>
+      <button class="mock-button" style="padding:8px 20px; font-size:13px; background:transparent; color:#999; border:1px solid #333; border-radius:6px;">+ 记录卖出</button>
+      <span style="margin-left:auto; font-size:12px; color:#888;">导出JSON ▾</span>
+    </div>
+
+    <!-- Holdings table -->
+    <div style="border:1px solid #2a2a2e; border-radius:8px; overflow:hidden; margin-bottom:12px;">
+      <div style="padding:12px 16px; background:#1a1b20; border-bottom:1px solid #2a2a2e; font-size:14px; font-weight:600; color:#f0f0f0;">
+        当前持仓
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#16171c; text-align:left;">
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">物品</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">持有量</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">买入均价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">当前价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">成本</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">市值</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">盈亏</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:center; border-bottom:2px solid #2a2a2e;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">9x19mm PSO</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">500</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">1,350</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">1,280</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">675,000</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">640,000</td>
+            <td style="padding:12px 14px; color:#ff4d5a; text-align:right; font-weight:600;">-35,000</td>
+            <td style="padding:12px 14px; text-align:center;"><span style="font-size:12px; color:#e63946; cursor:pointer;">卖出</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22; background:#111216;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">M855A1</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">1,000</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">1,680</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">2,100</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">1,680,000</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">2,100,000</td>
+            <td style="padding:12px 14px; color:#4ade80; text-align:right; font-weight:600;">+420,000</td>
+            <td style="padding:12px 14px; text-align:center;"><span style="font-size:12px; color:#4ade80; cursor:pointer;">卖出</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">7.62x39mm BP</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">200</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">3,300</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">3,450</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">660,000</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">690,000</td>
+            <td style="padding:12px 14px; color:#4ade80; text-align:right; font-weight:600;">+30,000</td>
+            <td style="padding:12px 14px; text-align:center;"><span style="font-size:12px; color:#4ade80; cursor:pointer;">卖出</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Trade history -->
+    <div style="border:1px solid #2a2a2e; border-radius:8px; overflow:hidden;">
+      <div style="padding:12px 16px; background:#1a1b20; border-bottom:1px solid #2a2a2e; font-size:14px; font-weight:600; color:#f0f0f0;">
+        交易记录
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#16171c; text-align:left;">
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">时间</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">类型</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">物品</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">数量</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">单价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">总价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">盈亏</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:10px 14px; color:#bbb;">05/27 18:30</td>
+            <td style="padding:10px 14px;"><span style="color:#4ade80;">买入</span></td>
+            <td style="padding:10px 14px; color:#f0f0f0;">M855A1</td>
+            <td style="padding:10px 14px; color:#f0f0f0; text-align:right;">1,000</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">1,680</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">1,680,000</td>
+            <td style="padding:10px 14px; text-align:right; color:#888;">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22; background:#111216;">
+            <td style="padding:10px 14px; color:#bbb;">05/27 14:15</td>
+            <td style="padding:10px 14px;"><span style="color:#ff4d5a;">卖出</span></td>
+            <td style="padding:10px 14px; color:#f0f0f0;">5.56x45 M855</td>
+            <td style="padding:10px 14px; color:#f0f0f0; text-align:right;">800</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">1,050</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">840,000</td>
+            <td style="padding:10px 14px; text-align:right; color:#4ade80; font-weight:600;">+96,000</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:10px 14px; color:#bbb;">05/27 10:00</td>
+            <td style="padding:10px 14px;"><span style="color:#4ade80;">买入</span></td>
+            <td style="padding:10px 14px; color:#f0f0f0;">5.56x45 M855</td>
+            <td style="padding:10px 14px; color:#f0f0f0; text-align:right;">800</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">930</td>
+            <td style="padding:10px 14px; color:#bbb; text-align:right;">744,000</td>
+            <td style="padding:10px 14px; text-align:right; color:#888;">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+  <div class="mockup">
+    <div class="mockup-header">数据存储</div>
+    <div class="mockup-body" style="padding:14px; font-size:13px; color:#bbb; line-height:1.8;">
+      <strong style="color:#f0f0f0;">持仓 & 交易记录</strong> → localStorage<br>
+      <strong style="color:#f0f0f0;">数据导出</strong> → 导出为 JSON 文件下载<br>
+      <strong style="color:#f0f0f0;">数据导入</strong> → 导入 JSON 恢复数据<br>
+      <strong style="color:#f0f0f0;">自动清理</strong> → 超过 30 天的已完成交易记录自动删除<br>
+      <strong style="color:#f0f0f0;">价格标注</strong> → 买入/卖出点在行情走势图上标记
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">操作流程</div>
+    <div class="mockup-body" style="padding:14px; font-size:13px; color:#bbb; line-height:1.8;">
+      <strong style="color:#4ade80;">买入</strong>：弹出表单 → 选物品 / 填数量 / 填价格 → 保存<br>
+      <strong style="color:#ff4d5a;">卖出</strong>：选持仓物品 → 填数量 / 价格 → 自动算盈亏<br>
+      <strong style="color:#f0f0f0;">盈亏计算</strong>：(卖出价 - 买入均价) × 数量 = 盈亏<br>
+      <strong style="color:#f0f0f0;">持仓均价</strong>：加权平均，多次买入自动合并
+    </div>
+  </div>
+</div>

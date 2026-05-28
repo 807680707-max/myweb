@@ -4,7 +4,6 @@
   --surface: #14151a;
   --surface-alt: #111216;
   --border: #2a2a2e;
-  --border-light: #3a3a3e;
   --text: #bbb;
   --text-dim: #777;
   --text-bright: #f0f0f0;
@@ -15,7 +14,6 @@
   --gold: #f4a261;
   --purple: #a855f7;
   --blue: #3b82f6;
-  --white: #c0c0c0;
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Consolas', monospace;
   --radius: 8px;
@@ -306,10 +304,7 @@ body {
   font-size: 12px;
   flex-wrap: wrap;
 }
-.config-bar .config-group {
-  display: flex; align-items: center; gap: 4px;
-}
-.config-bar .config-group input {
+.config-input-num {
   width: 50px; padding: 4px 6px;
   text-align: center;
   background: #1a1b1f;
@@ -318,6 +313,12 @@ body {
   color: var(--text-bright);
   font-size: 12px;
   font-family: var(--font-mono);
+}
+.config-input-num.gold { color: var(--gold); }
+
+/* === Time range buttons === */
+.time-range-btn.active {
+  background: var(--red); color: #fff; border-color: var(--red);
 }
 
 /* === Sparkline container === */

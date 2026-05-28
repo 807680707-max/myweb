@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Chen — 职业赛车手</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #08090b;
+    --surface: #111318;
+    --border: #1e2028;
+    --red: #e63946;
+    --red-glow: #ff4d5a;
+    --orange: #f77f00;
+    --gold: #f4a261;
+    --cyan: #00b4d8;
+    --text: #b0b3ba;
+    --text-dim: #6c6f76;
+    --text-bright: #edeeef;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar { display: none; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== Navigation Dots ===== */
+  .nav-dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .nav-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.12);
+    cursor: pointer;
+    transition: all 0.35s;
+    position: relative;
+  }
+  .nav-dot:hover { background: rgba(255,255,255,0.5); }
+  .nav-dot.active { background: var(--red); border-color: var(--red-glow); box-shadow: 0 0 14px var(--red); }
+  .nav-dot .dot-label {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 600;
+    color: transparent;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    pointer-events: none;
+  }
+  .nav-dot:hover .dot-label,
+  .nav-dot.active .dot-label { color: var(--text-bright); }
+
+  /* ===== Slide Layout ===== */
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 0;
+  }
+  .slide-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Slide 1: Hero ===== */
+  .slide-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 50%, rgba(230,57,70,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 75% 60%, rgba(0,180,216,0.07) 0%, transparent 60%),
+      var(--bg);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red-glow);
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.22);
+    margin-bottom: 24px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 8px var(--red);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.6); }
+  }
+  .hero-name {
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text-bright);
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .hero-name .hl {
+    background: linear-gradient(135deg, var(--red-glow), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+  .hero-stats-row {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 32px;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    display: block;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .hero-stat .num span { color: var(--red-glow); }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hero-img-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 80px rgba(230,57,70,0.1), 0 30px 60px rgba(0,0,0,0.5);
+    filter: brightness(0.9) contrast(1.05);
+  }
+  .hero-img-glow {
+    position: absolute;
+    inset: -3px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(230,57,70,0.35), transparent 50%, rgba(0,180,216,0.2));
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0.6;
+  }
+
+  /* ===== Slide 2: About ===== */
+  .slide-about {
+    background:
+      radial-gradient(ellipse 50% 60% at 80% 20%, rgba(0,180,216,0.06) 0%, transparent 60%),
+      var(--bg);
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--red);
+    letter-spacing: 2px;
+  }
+  .section-num::before { content: '/ '; opacity: 0.4; }
+  .section-heading {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -1px;
+    margin-top: 4px;
+  }
+  .section-heading .hl {
+    background: linear-gradient(135deg, var(--cyan), var(--red-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .about-img-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .about-img-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85) contrast(1.05);
+  }
+  .about-img-card .card-tag {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .about-text h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+  }
+  .about-text p {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .highlight-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .highlight-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .hi-red { background: rgba(230,57,70,0.15); }
+  .hi-gold { background: rgba(244,162,97,0.15); }
+  .hi-cyan { background: rgba(0,180,216,0.15); }
+  .hi-green { background: rgba(46,204,113,0.15); }
+  .highlight-item h4 {
+    font-size: 14px; font-weight: 600; color: var(--text-bright);
+  }
+  .highlight-item span {
+    font-size: 12px; color: var(--text-dim);
+  }
+
+  /* ===== Slide 3: Achievements ===== */
+  .slide-achievements {
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 70%, rgba(230,57,70,0.07) 0%, transparent 60%),
+      var(--bg);
+  }
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .achieve-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .achieve-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(230,57,70,0.3);
+  }
+  .achieve-card img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    filter: brightness(0.8);
+  }
+  .achieve-card .card-body { padding: 20px; }
+  .achieve-card .card-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--red); letter-spacing: 1px;
+  }
+  .achieve-card h4 {
+    font-size: 16px; font-weight: 700; color: var(--text-bright); margin: 4px 0 8px;
+  }
+  .achieve-card p {
+    font-size: 13px; color: var(--text-dim); line-height: 1.6;
+  }
+
+  /* ===== Slide 4: Career Timeline ===== */
+  .slide-timeline {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,180,216,0.04) 0%, transparent 60%),
+      var(--bg);
+  }
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      var(--red) 10%,
+      var(--orange) 50%,
+      var(--cyan) 90%,
+      transparent 100%
+    );
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+    padding-left: 36px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -29px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 10px rgba(230,57,70,0.5);
+  }
+  .tl-item:nth-child(even)::before { background: var(--orange); box-shadow: 0 0 10px rgba(247,127,0,0.5); }
+  .tl-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--red); letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .tl-item:nth-child(even) .tl-year { color: var(--orange); }
+  .tl-item h4 {
+    font-size: 17px; font-weight: 700; color: var(--text-bright); margin-bottom: 4px;
+  }
+  .tl-item p {
+    font-size: 14px; color: var(--text-dim); line-height: 1.6;
+  }
+  .timeline-img-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .timeline-img-row img {
+    width: 120px; height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    filter: brightness(0.8);
+    transition: filter 0.3s;
+  }
+  .timeline-img-row img:hover { filter: brightness(1); }
+
+  /* ===== Slide 5: Contact ===== */
+  .slide-contact {
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 80%, rgba(230,57,70,0.06) 0%, transparent 60%),
+      var(--bg);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: start;
+  }
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .c-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .ci-red { background: rgba(230,57,70,0.15); color: var(--red-glow); }
+  .ci-cyan { background: rgba(0,180,216,0.15); color: var(--cyan); }
+  .ci-gold { background: rgba(244,162,97,0.15); color: var(--gold); }
+  .c-info h4 { font-size: 12px; color: var(--text-dim); font-weight: 500; margin-bottom: 2px; }
+  .c-info span { font-size: 15px; color: var(--text-bright); font-weight: 600; }
+  .c-info a { color: var(--cyan); text-decoration: none; }
+  .c-info a:hover { text-decoration: underline; }
+
+  .sponsor-row {
+    display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .sponsor-logo {
+    height: 32px; padding: 6px 14px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-dim);
+    display: flex; align-items: center; gap: 6px;
+    letter-spacing: 1px;
+  }
+  .sponsor-logo .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+
+  .qr-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+    position: sticky;
+    top: 80px;
+  }
+  .qr-card h3 { font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; }
+  .qr-card .hint { font-size: 12px; color: var(--text-dim); margin-bottom: 18px; }
+  .qr-wrap {
+    width: 180px; height: 180px;
+    margin: 0 auto 16px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .qr-wrap canvas { width: 164px; height: 164px; margin: 8px; }
+  .qr-wrap .qr-mask {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; transition: background 0.3s;
+  }
+  .qr-wrap .qr-mask span {
+    opacity: 0; color: #fff; font-size: 12px; font-weight: 600;
+    transition: opacity 0.3s;
+  }
+  .qr-wrap:hover .qr-mask { background: rgba(0,0,0,0.5); }
+  .qr-wrap:hover .qr-mask span { opacity: 1; }
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; color: var(--red-glow);
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.2);
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-dl:hover {
+    background: rgba(230,57,70,0.15);
+    border-color: rgba(230,57,70,0.35);
+  }
+
+  /* ===== Footer Bar ===== */
+  .footer-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(8,9,11,0.7);
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .footer-bar .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600; letter-spacing: 1px;
+    color: var(--text-bright);
+  }
+  .footer-bar .logo span { color: var(--red-glow); }
+
+  /* ===== Scroll Indicator ===== */
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.5;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .scroll-hint span { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
+  .scroll-hint .arrow { font-size: 18px; color: var(--text-dim); }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-name { font-size: 42px; }
+    .hero-img-wrap { order: -1; }
+    .hero-img { aspect-ratio: 16/9; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-img-card { aspect-ratio: 16/9; max-height: 300px; }
+    .achievements-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .qr-card { position: static; }
+    .nav-dots { right: 10px; gap: 10px; }
+    .nav-dot .dot-label { display: none; }
+    .section-heading { font-size: 30px; }
+    .footer-bar { padding: 8px 16px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <a class="nav-dot active" href="#hero"><span class="dot-label">首页</span></a>
+  <a class="nav-dot" href="#about"><span class="dot-label">关于</span></a>
+  <a class="nav-dot" href="#achievements"><span class="dot-label">荣誉</span></a>
+  <a class="nav-dot" href="#timeline"><span class="dot-label">生涯</span></a>
+  <a class="nav-dot" href="#contact"><span class="dot-label">联系</span></a>
+</nav>
+
+<!-- ======================== -->
+<!-- Slide 1: Hero            -->
+<!-- ======================== -->
+<section class="slide slide-hero" id="hero">
+  <div class="slide-inner">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">Professional Racing Driver</div>
+        <h1 class="hero-name">ALEX<br><span class="hl">CHEN</span></h1>
+        <p class="hero-title">GT 锦标赛 · 职业赛车手</p>
+        <div class="hero-stats-row">
+          <div class="hero-stat"><span class="num"><span>12</span>+</span><span class="lbl">年赛道经验</span></div>
+          <div class="hero-stat"><span class="num"><span>47</span></span><span class="lbl">次登台领奖</span></div>
+          <div class="hero-stat"><span class="num"><span>8</span></span><span class="lbl">项冠军头衔</span></div>
+        </div>
+        <p style="font-size:15px;color:var(--text-dim);max-width:420px;">
+          速度与精准的追求者。从卡丁车到 GT 耐力赛，每一圈都在挑战极限。
+        </p>
+      </div>
+      <div class="hero-img-wrap">
+        <div class="hero-img-glow"></div>
+        <img class="hero-img"
+             src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=85"
+             alt="Racing car on track"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22><rect fill=%22%23111318%22 width=%22800%22 height=%22600%22/><text x=%22400%22 y=%22300%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2220%22>🏎️ Racing</text></svg>'">
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="arrow">&darr;</div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- Slide 2: About           -->
+<!-- ======================== -->
+<section class="slide slide-about" id="about">
+  <div class="slide-inner">
+    <div class="section-header">
+      <p class="section-num">01</p>
+      <h2 class="section-heading">关于<span class="hl">我</span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-img-card">
+        <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9e?w=600&q=85"
+             alt="Racing helmet detail"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22800%22><rect fill=%22%23111318%22 width=%22600%22 height=%22800%22/><text x=%22300%22 y=%22400%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2224%22>🏍️</text></svg>'">
+        <div class="card-tag"># RacingHelmet</div>
+      </div>
+      <div class="about-text">
+        <h3>从卡丁车少年到职业车手</h3>
+        <p>
+          8 岁第一次接触卡丁车，14 岁拿下全国青少年卡丁车锦标赛冠军。此后一路进阶，
+          先后征战 F4、GT4、GT3 等各级别赛事。现效力于亚洲顶尖 GT 车队，
+          主攻耐力赛与冲刺赛。
+        </p>
+        <p>
+          赛道之外，也积极参与赛车文化推广与青少年驾驶培训项目。
+          相信速度不是目的，控制才是。每一次刹车、每一度转向，都是身体与机械的精密对话。
+        </p>
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon hi-red">🏁</div>
+            <div><h4>GT3 职业车手</h4><span>FIA 银级认证</span></div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon hi-gold">🏆</div>
+            <div><h4>8 次冠军</h4><span>含 2 次年度总冠军</span></div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon hi-cyan">⏱</div>
+            <div><h4>最佳圈速保持者</h4><span>上海 / 珠海 / 铃鹿</span></div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon hi-green">🎯</div>
+            <div><h4>模拟器教练</h4><span>培养新生代车手</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- Slide 3: Achievements    -->
+<!-- ======================== -->
+<section class="slide slide-achievements" id="achievements">
+  <div class="slide-inner">
+    <div class="section-header">
+      <p class="section-num">02</p>
+      <h2 class="section-heading">赛事<span class="hl">荣誉</span></h2>
+    </div>
+    <div class="achievements-grid">
+      <div class="achieve-card">
+        <img src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?w=600&q=85"
+             alt="Racing podium"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22375%22><rect fill=%22%231a1d26%22 width=%22600%22 height=%22375%22/></svg>'">
+        <div class="card-body">
+          <p class="card-year">2025</p>
+          <h4>亚洲 GT 挑战赛 — 年度总冠军</h4>
+          <p>6 站 4 冠 2 亚，提前一站锁定年度冠军，刷新赛道纪录。</p>
+        </div>
+      </div>
+      <div class="achieve-card">
+        <img src="https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=600&q=85"
+             alt="Night race"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22375%22><rect fill=%22%231a1d26%22 width=%22600%22 height=%22375%22/></svg>'">
+        <div class="card-body">
+          <p class="card-year">2024</p>
+          <h4>澳门格兰披治 — GT 杯季军</h4>
+          <p>街道赛最速圈速保持者，在传奇东望洋赛道登上领奖台。</p>
+        </div>
+      </div>
+      <div class="achieve-card">
+        <img src="https://images.unsplash.com/photo-1532906619279-a4b7267faa66?w=600&q=85"
+             alt="Race start"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22375%22><rect fill=%22%231a1d26%22 width=%22600%22 height=%22375%22/></svg>'">
+        <div class="card-body">
+          <p class="card-year">2023</p>
+          <h4>中国耐力锦标赛 — 车队冠军</h4>
+          <p>6 小时耐力赛零失误完赛，助力车队拿下年度团队冠军。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- Slide 4: Career Timeline -->
+<!-- ======================== -->
+<section class="slide slide-timeline" id="timeline">
+  <div class="slide-inner">
+    <div class="section-header">
+      <p class="section-num">03</p>
+      <h2 class="section-heading">职业<span class="hl">生涯</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="tl-year">2025 — Present</p>
+        <h4>亚洲 GT 挑战赛 · 签约车手</h4>
+        <p>加盟卫冕冠军车队，驾驶 Porsche 911 GT3 R (992) 征战全赛季。在揭幕战即夺杆位并获胜，最终以 4 场胜利加冕年度总冠军，同时保持 3 条赛道的圈速纪录。</p>
+        <div class="timeline-img-row">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&q=80" alt="Porsche GT3"
+               onerror="this.style.display='none'">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" alt="Track"
+               onerror="this.style.display='none'">
+          <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=300&q=80" alt="Race car detail"
+               onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2023 — 2024</p>
+        <h4>中国 GT 锦标赛 · 主力车手</h4>
+        <p>驾驶 Audi R8 LMS GT3 征战两个完整赛季，斩获 5 次分站冠军、11 次领奖台。2024 年澳门格兰披治 GT 杯收获季军，创下个人街道赛最佳成绩。</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2020 — 2022</p>
+        <h4>亚洲 F4 锦标赛 · 晋级之路</h4>
+        <p>从卡丁车全国冠军晋升至方程式，完成方程式赛车基础训练与两个赛季的 F4 比赛。以 3 胜 7 次领奖台的战绩顺利毕业，正式转向 GT 赛事。</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2014 — 2019</p>
+        <h4>卡丁车 · 梦开始的地方</h4>
+        <p>8 岁起步，14 岁获全国青少年卡丁车锦标赛冠军，16 岁入选国家青少年赛车培养计划。卡丁车时期共获得 20+ 场全国性赛事冠军，为职业生涯奠定基石。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- Slide 5: Contact         -->
+<!-- ======================== -->
+<section class="slide slide-contact" id="contact">
+  <div class="slide-inner">
+    <div class="section-header">
+      <p class="section-num">04</p>
+      <h2 class="section-heading">联系<span class="hl">合作</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card">
+          <div class="contact-item">
+            <div class="c-icon ci-red">✉</div>
+            <div class="c-info"><h4>经纪人 / 商务合作</h4><span><a href="mailto:alex.chen@racing.com">alex.chen@racing.com</a></span></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon ci-cyan">◉</div>
+            <div class="c-info"><h4>社交媒体</h4><span><a href="#" target="_blank">Instagram / 微博 @alexchen_racing</a></span></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon ci-gold">☏</div>
+            <div class="c-info"><h4>车队联系</h4><span>+86 138-0000-8888</span></div>
+          </div>
+        </div>
+        <div class="sponsor-row">
+          <div class="sponsor-logo"><span class="dot" style="background:var(--red-glow)"></span> PORSCHE</div>
+          <div class="sponsor-logo"><span class="dot" style="background:var(--cyan)"></span> MICHELIN</div>
+          <div class="sponsor-logo"><span class="dot" style="background:var(--gold)"></span> RED BULL</div>
+          <div class="sponsor-logo"><span class="dot" style="background:#4f46e5"></span> TAG HEUER</div>
+        </div>
+      </div>
+      <!-- QR Code -->
+      <div class="qr-card">
+        <h3>微信扫一扫</h3>
+        <p class="hint">扫码添加商务联系 / 关注公众号</p>
+        <div class="qr-wrap" id="qrWrap">
+          <canvas id="qrCanvas" width="164" height="164"></canvas>
+          <div class="qr-mask"><span>点击下载二维码</span></div>
+        </div>
+        <a class="btn-dl" id="btnDownload" download="alexchen-qr.png">↓ 下载二维码</a>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:10px;">赛事日程 / 商业合作 / 媒体采访</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="footer-bar">
+  <div class="logo">&lt;<span>A</span>LEX CHEN /&gt;</div>
+  <span>Professional Racing Driver &copy; 2026</span>
+</div>
+
+<!-- QR Generator + Nav Script -->
+<script>
+(function() {
+  /* ---- QR Code ---- */
+  var canvas = document.getElementById('qrCanvas');
+  if (canvas) {
+    var ctx = canvas.getContext('2d');
+    var size = 164, mods = 25, ms = size / mods;
+    function sr(s) { var x = s; return function() { x = (x * 1103515245 + 12345) & 0x7fffffff; return x / 0x7fffffff; }; }
+    var rng = sr(137);
+    var m = Array.from({length:mods}, function() { return Array(mods).fill(false); });
+    function finder(r,c) {
+      for (var i=0;i<7;i++) for (var j=0;j<7;j++) {
+        if (r+i<mods && c+j<mods) {
+          var o = i===0||i===6||j===0||j===6;
+          var n = i>=2&&i<=4&&j>=2&&j<=4;
+          m[r+i][c+j] = o||n;
+        }
+      }
+    }
+    finder(0,0); finder(0,mods-7); finder(mods-7,0);
+    for (var i=8;i<mods-8;i++) { m[6][i]=i%2===0; m[i][6]=i%2===0; }
+    for (var r=0;r<mods;r++) for (var c=0;c<mods;c++) {
+      if (r<8&&c<8) continue; if (r<8&&c>=mods-8) continue; if (r>=mods-8&&c<8) continue;
+      if (r===6||c===6) continue; m[r][c]=rng()>0.5;
+    }
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,size,size);
+    ctx.fillStyle='#08090b';
+    for (var r=0;r<mods;r++) for (var c=0;c<mods;c++) {
+      if (m[r][c]) { var x=Math.floor(c*ms), y=Math.floor(r*ms), w=Math.ceil(ms); ctx.fillRect(x+0.5,y+0.5,w-1,w-1); }
+    }
+    function dl() { var a=document.createElement('a'); a.download='alexchen-qr.png'; a.href=canvas.toDataURL('image/png'); a.click(); }
+    document.getElementById('qrWrap').addEventListener('click', dl);
+    document.getElementById('btnDownload').addEventListener('click', function(e) { e.preventDefault(); dl(); });
+  }
+
+  /* ---- Scroll Spy ---- */
+  var dots = document.querySelectorAll('.nav-dot');
+  var slides = document.querySelectorAll('.slide');
+  function update() {
+    var cy = window.scrollY + window.innerHeight / 2;
+    var idx = 0;
+    slides.forEach(function(s, i) {
+      if (s.offsetTop <= cy && s.offsetTop + s.offsetHeight > cy) idx = i;
+    });
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+
+  /* ---- Hide scroll hint on scroll ---- */
+  var hint = document.querySelector('.scroll-hint');
+  if (hint) {
+    window.addEventListener('scroll', function() {
+      hint.style.opacity = window.scrollY > 100 ? '0' : '0.5';
+      hint.style.transition = 'opacity 0.5s';
+    }, { passive: true });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<h2>买卖建议 — 页面布局</h2>
+<p class="subtitle">自动计算价差，一眼看出什么时候该买、什么时候该卖</p>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">买卖建议 Tab</div>
+  <div class="mockup-body" style="padding:20px; background:#0a0b0e;">
+
+    <!-- Strategy cards -->
+    <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:200px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; color:#999; margin-bottom:4px;">建议买入</div>
+        <div style="font-size:28px; font-weight:700; color:#4ade80;">12</div>
+        <div style="font-size:12px; color:#aaa;">个物品低于均线 15%+</div>
+      </div>
+      <div style="flex:1; min-width:200px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; color:#999; margin-bottom:4px;">建议卖出</div>
+        <div style="font-size:28px; font-weight:700; color:#ff4d5a;">5</div>
+        <div style="font-size:12px; color:#aaa;">个物品高于均线 15%+</div>
+      </div>
+      <div style="flex:1; min-width:200px; background:#14151a; border:1px solid #2a2a2e; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; color:#999; margin-bottom:4px;">持仓盈利</div>
+        <div style="font-size:28px; font-weight:700; color:#f4a261;">+24,500</div>
+        <div style="font-size:12px; color:#aaa;">哈夫币</div>
+      </div>
+    </div>
+
+    <!-- Signal list -->
+    <div style="border:1px solid #2a2a2e; border-radius:8px; overflow:hidden;">
+      <div style="padding:12px 16px; background:#1a1b20; border-bottom:1px solid #2a2a2e; font-size:14px; font-weight:600; color:#f0f0f0;">
+        交易信号
+        <span style="font-size:11px; font-weight:400; color:#999; margin-left:8px;">基于24h均线 + 15% 阈值</span>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#16171c; text-align:left;">
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">物品</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">当前价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">24h均线</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">偏离</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">信号</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:center; border-bottom:2px solid #2a2a2e;">置信度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1e1e22; background:#1a1f1a;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">9x19mm PSO</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">1,280</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">1,450</td>
+            <td style="padding:12px 14px; color:#4ade80; text-align:right; font-weight:600;">-11.7%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#1a3a1a; color:#4ade80; border-radius:4px; font-size:12px;">买入</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#4ade80;">83%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">M855A1</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">2,100</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">1,750</td>
+            <td style="padding:12px 14px; color:#ff4d5a; text-align:right; font-weight:600;">+20.0%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#3a1a1a; color:#ff4d5a; border-radius:4px; font-size:12px;">卖出</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#ff4d5a;">91%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e1e22; background:#111216;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">7.62x39mm BP</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">3,450</td>
+            <td style="padding:12px 14px; color:#bbb; text-align:right;">3,300</td>
+            <td style="padding:12px 14px; color:#f4a261; text-align:right; font-weight:600;">+4.5%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#2a2a1a; color:#f4a261; border-radius:4px; font-size:12px;">观望</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#f4a261;">55%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Alert settings -->
+    <div style="margin-top:12px; border:1px solid #2a2a2e; border-radius:8px; padding:14px 16px; background:#14151a; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <span style="font-size:13px; font-weight:600; color:#f0f0f0;">提醒阈值</span>
+      <span style="font-size:12px; color:#aaa;">当价格偏离均线超过</span>
+      <div class="mock-input" style="width:60px; padding:6px 10px; font-size:12px; text-align:center; background:#1a1b1f; color:#f0f0f0; border:1px solid #333;">15</div>
+      <span style="font-size:12px; color:#aaa;">% 时弹出通知</span>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:#bbb; cursor:pointer;">
+        <input type="checkbox" checked style="accent-color:#4ade80;"> 买入提醒
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:#bbb; cursor:pointer;">
+        <input type="checkbox" checked style="accent-color:#ff4d5a;"> 卖出提醒
+      </label>
+    </div>
+
+  </div>
+</div>

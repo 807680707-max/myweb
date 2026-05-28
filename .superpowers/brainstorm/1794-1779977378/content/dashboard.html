@@ -1,0 +1,126 @@
+<h2>行情看板 — 页面布局</h2>
+<p class="subtitle">打开即看，核心信息一目了然</p>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">行情看板 Tab 布局</div>
+  <div class="mockup-body" style="padding:20px; background:var(--color-bg);">
+
+    <!-- Top bar -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-weight:700; font-size:16px; color:var(--color-bright);">行情看板</span>
+        <span style="font-size:11px; padding:2px 8px; background:#1a3a1a; color:#4ade80; border-radius:10px;">数据更新于 3 分钟前</span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div class="mock-input" style="width:160px; padding:6px 10px; font-size:12px;">搜索物品...</div>
+        <div style="font-size:12px; padding:6px 12px; border:1px solid var(--color-border); border-radius:6px; color:var(--color-dim);">全部分类 ▾</div>
+        <button class="mock-button" style="padding:6px 16px; font-size:12px; background:var(--color-accent); color:#fff; border:none; border-radius:6px;">刷新</button>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:100px; background:#111318; border:1px solid var(--color-border); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:11px; color:var(--color-dim);">总物品数</div>
+        <div style="font-size:22px; font-weight:700; color:var(--color-bright);">186</div>
+      </div>
+      <div style="flex:1; min-width:100px; background:#111318; border:1px solid var(--color-border); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:11px; color:var(--color-dim);">今日涨幅Top</div>
+        <div style="font-size:22px; font-weight:700; color:#4ade80;">+18.5%</div>
+      </div>
+      <div style="flex:1; min-width:100px; background:#111318; border:1px solid var(--color-border); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:11px; color:var(--color-dim);">今日跌幅Top</div>
+        <div style="font-size:22px; font-weight:700; color:var(--color-accent);">-12.3%</div>
+      </div>
+      <div style="flex:1; min-width:100px; background:#111318; border:1px solid var(--color-border); border-radius:8px; padding:12px; text-align:center;">
+        <div style="font-size:11px; color:var(--color-dim);">异常波动</div>
+        <div style="font-size:22px; font-weight:700; color:#f4a261;">3</div>
+      </div>
+    </div>
+
+    <!-- Price table -->
+    <div style="border:1px solid var(--color-border); border-radius:8px; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#111318; text-align:left;">
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500;">物品名称</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500;">分类</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500; text-align:right;">当前价</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500; text-align:right;">24h最低</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500; text-align:right;">24h最高</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500; text-align:right;">涨跌幅</th>
+            <th style="padding:10px 12px; color:var(--color-dim); font-weight:500; text-align:center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding:10px 12px; color:var(--color-bright); font-weight:600;">9x19mm PSO</td>
+            <td style="padding:10px 12px; color:var(--color-dim);">弹药</td>
+            <td style="padding:10px 12px; color:var(--color-bright); text-align:right;">1,280</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">1,150</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">1,350</td>
+            <td style="padding:10px 12px; color:#4ade80; text-align:right; font-weight:600;">+11.3%</td>
+            <td style="padding:10px 12px; text-align:center;">
+              <span style="font-size:11px; padding:2px 8px; border:1px solid var(--color-accent); color:var(--color-accent); border-radius:4px;">详情</span>
+            </td>
+          </tr>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding:10px 12px; color:var(--color-bright); font-weight:600;">5.56x45mm M855</td>
+            <td style="padding:10px 12px; color:var(--color-dim);">弹药</td>
+            <td style="padding:10px 12px; color:var(--color-bright); text-align:right;">980</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">970</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">1,020</td>
+            <td style="padding:10px 12px; color:var(--color-accent); text-align:right; font-weight:600;">-3.9%</td>
+            <td style="padding:10px 12px; text-align:center;">
+              <span style="font-size:11px; padding:2px 8px; border:1px solid var(--color-accent); color:var(--color-accent); border-radius:4px;">详情</span>
+            </td>
+          </tr>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding:10px 12px; color:var(--color-bright); font-weight:600;">7.62x39mm BP</td>
+            <td style="padding:10px 12px; color:var(--color-dim);">弹药</td>
+            <td style="padding:10px 12px; color:var(--color-bright); text-align:right;">3,450</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">3,200</td>
+            <td style="padding:10px 12px; color:var(--color-dim); text-align:right;">3,600</td>
+            <td style="padding:10px 12px; color:#4ade80; text-align:right; font-weight:600;">+7.8%</td>
+            <td style="padding:10px 12px; text-align:center;">
+              <span style="font-size:11px; padding:2px 8px; border:1px solid var(--color-accent); color:var(--color-accent); border-radius:4px;">详情</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Chart area -->
+    <div style="margin-top:16px; border:1px solid var(--color-border); border-radius:8px; overflow:hidden;">
+      <div style="padding:12px 16px; background:#111318; border-bottom:1px solid var(--color-border); font-size:14px; font-weight:600; color:var(--color-bright);">
+        9x19mm PSO — 价格走势
+        <span style="font-size:11px; font-weight:400; color:var(--color-dim); margin-left:8px;">近24小时</span>
+      </div>
+      <div class="placeholder" style="height:180px; margin:16px;">
+        ECharts 折线图<br>
+        价格曲线 + 涨跌红绿色 + 异常标记点 + 事件标注竖线
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+  <div class="mockup">
+    <div class="mockup-header">排序 & 筛选</div>
+    <div class="mockup-body" style="padding:12px; font-size:13px; color:var(--color-dim); line-height:2;">
+      • 点击表头：按涨跌幅 / 价格 / 名称排序<br>
+      • 分类过滤：弹药 / 钥匙卡 / 配件 / 装备<br>
+      • 收藏星标：置顶关注的物品
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">自动刷新逻辑</div>
+    <div class="mockup-body" style="padding:12px; font-size:13px; color:var(--color-dim); line-height:2;">
+      • 每 10 分钟自动拉取<br>
+      • 显示"X分钟前更新"<br>
+      • 手动刷新按钮<br>
+      • 刷新时表格不闪烁（仅更新变化数据）
+    </div>
+  </div>
+</div>

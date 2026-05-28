@@ -1,0 +1,118 @@
+<h2>买卖建议 — 增加 24h 价格区间可视化</h2>
+<p class="subtitle">横向区间条直观展示最低/最高/当前价的相对位置</p>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">交易信号表 (带价格区间可视化)</div>
+  <div class="mockup-body" style="padding:20px; background:#0a0b0e;">
+
+    <div style="border:1px solid #2a2a2e; border-radius:8px; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#1a1b20; text-align:left;">
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">物品</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">当前价</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e; min-width:220px;">24h 价格区间</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:right; border-bottom:2px solid #2a2a2e;">偏离</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; border-bottom:2px solid #2a2a2e;">信号</th>
+            <th style="padding:10px 14px; color:#d0d0d0; font-weight:600; text-align:center; border-bottom:2px solid #2a2a2e;">置信度</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Row 1 - 买入信号 -->
+          <tr style="border-bottom:1px solid #1e1e22; background:#1a1f1a;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">9x19mm PSO</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">1,280</td>
+            <td style="padding:12px 14px; vertical-align:middle;">
+              <!-- Range bar -->
+              <div style="position:relative; height:32px;">
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:#1f2025; border-radius:3px;"></div>
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:linear-gradient(to right,#4ade80 0%,#f4a261 50%,#ff4d5a 100%); border-radius:3px; opacity:0.4;"></div>
+                <!-- Current price dot -->
+                <div style="position:absolute; left:23%; top:6px; width:14px; height:14px; background:#4ade80; border:2px solid #0a0b0e; border-radius:50%; box-shadow:0 0 6px #4ade80;"></div>
+                <!-- Price labels -->
+                <div style="position:absolute; left:0; top:16px; font-size:10px; color:#888;">1,150</div>
+                <div style="position:absolute; right:0; top:16px; font-size:10px; color:#888;">1,510</div>
+                <div style="position:absolute; left:23%; top:-12px; font-size:10px; color:#4ade80; font-weight:600; white-space:nowrap; transform:translateX(-50%);">1,280</div>
+              </div>
+            </td>
+            <td style="padding:12px 14px; color:#4ade80; text-align:right; font-weight:600;">-11.7%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#1a3a1a; color:#4ade80; border-radius:4px; font-size:12px;">买入</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#4ade80;">83%</td>
+          </tr>
+
+          <!-- Row 2 - 卖出信号 -->
+          <tr style="border-bottom:1px solid #1e1e22;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">M855A1</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">2,100</td>
+            <td style="padding:12px 14px; vertical-align:middle;">
+              <div style="position:relative; height:32px;">
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:#1f2025; border-radius:3px;"></div>
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:linear-gradient(to right,#4ade80 0%,#f4a261 50%,#ff4d5a 100%); border-radius:3px; opacity:0.4;"></div>
+                <div style="position:absolute; left:85%; top:6px; width:14px; height:14px; background:#ff4d5a; border:2px solid #0a0b0e; border-radius:50%; box-shadow:0 0 6px #ff4d5a;"></div>
+                <div style="position:absolute; left:0; top:16px; font-size:10px; color:#888;">1,620</div>
+                <div style="position:absolute; right:0; top:16px; font-size:10px; color:#888;">2,150</div>
+                <div style="position:absolute; left:85%; top:-12px; font-size:10px; color:#ff4d5a; font-weight:600; white-space:nowrap; transform:translateX(-50%);">2,100</div>
+              </div>
+            </td>
+            <td style="padding:12px 14px; color:#ff4d5a; text-align:right; font-weight:600;">+20.0%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#3a1a1a; color:#ff4d5a; border-radius:4px; font-size:12px;">卖出</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#ff4d5a;">91%</td>
+          </tr>
+
+          <!-- Row 3 - 观望 -->
+          <tr style="border-bottom:1px solid #1e1e22; background:#111216;">
+            <td style="padding:12px 14px; color:#f0f0f0; font-weight:600;">7.62x39mm BP</td>
+            <td style="padding:12px 14px; color:#f0f0f0; text-align:right;">3,450</td>
+            <td style="padding:12px 14px; vertical-align:middle;">
+              <div style="position:relative; height:32px;">
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:#1f2025; border-radius:3px;"></div>
+                <div style="position:absolute; left:0; top:10px; width:100%; height:6px; background:linear-gradient(to right,#4ade80 0%,#f4a261 50%,#ff4d5a 100%); border-radius:3px; opacity:0.4;"></div>
+                <div style="position:absolute; left:62%; top:6px; width:14px; height:14px; background:#f4a261; border:2px solid #0a0b0e; border-radius:50%; box-shadow:0 0 6px #f4a261;"></div>
+                <div style="position:absolute; left:0; top:16px; font-size:10px; color:#888;">3,200</div>
+                <div style="position:absolute; right:0; top:16px; font-size:10px; color:#888;">3,600</div>
+                <div style="position:absolute; left:62%; top:-12px; font-size:10px; color:#f4a261; font-weight:600; white-space:nowrap; transform:translateX(-50%);">3,450</div>
+              </div>
+            </td>
+            <td style="padding:12px 14px; color:#f4a261; text-align:right; font-weight:600;">+4.5%</td>
+            <td style="padding:12px 14px;"><span style="padding:3px 10px; background:#2a2a1a; color:#f4a261; border-radius:4px; font-size:12px;">观望</span></td>
+            <td style="padding:12px 14px; text-align:center; color:#f4a261;">55%</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Legend -->
+    <div style="margin-top:12px; display:flex; gap:20px; align-items:center; font-size:11px; color:#999;">
+      <span>区间条：</span>
+      <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4ade80;"></span> 低位 (买入区)</span>
+      <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f4a261;"></span> 中位 (观望)</span>
+      <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ff4d5a;"></span> 高位 (卖出区)</span>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+  <div class="mockup">
+    <div class="mockup-header">区间条怎么看</div>
+    <div class="mockup-body" style="padding:14px; font-size:13px; color:#bbb; line-height:1.8;">
+      <strong style="color:#f0f0f0;">渐变底色</strong>：左绿 → 中黄 → 右红<br>
+      <strong style="color:#f0f0f0;">发光圆点</strong>：当前价格在区间内的位置<br>
+      <strong style="color:#f0f0f0;">两端数字</strong>：24h 最低价 / 最高价<br><br>
+      圆点 <strong style="color:#4ade80;">靠左(绿)</strong> = 接近 24h 低点 → 买入窗口<br>
+      圆点 <strong style="color:#ff4d5a;">靠右(红)</strong> = 接近 24h 高点 → 卖出窗口<br>
+      圆点 <strong style="color:#f4a261;">在中间</strong> = 价格中性 → 观望
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">数据来源</div>
+    <div class="mockup-body" style="padding:14px; font-size:13px; color:#bbb; line-height:1.8;">
+      24h 最低/最高价 = 过去 24 小时 API 数据中的 min/max<br>
+      当前价 = 最新一次 API 返回的价格<br>
+      圆点位置 = (当前价 - 最低) / (最高 - 最低) × 100%<br><br>
+      如果数据点不足 24h (首次打开)，则用已有数据计算区间
+    </div>
+  </div>
+</div>
