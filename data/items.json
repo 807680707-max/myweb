@@ -1,0 +1,38 @@
+{
+  "items": {
+    "9x19mm PSO": { "tier": 3, "category": "ammo" },
+    "9x19mm PST": { "tier": 2, "category": "ammo" },
+    "9x19mm RIP": { "tier": 1, "category": "ammo" },
+    "5.56x45mm M855": { "tier": 3, "category": "ammo" },
+    "5.56x45mm M855A1": { "tier": 4, "category": "ammo" },
+    "5.56x45mm M995": { "tier": 6, "category": "ammo" },
+    "7.62x39mm BP": { "tier": 5, "category": "ammo" },
+    "7.62x39mm PS": { "tier": 3, "category": "ammo" },
+    "7.62x51mm M80": { "tier": 3, "category": "ammo" },
+    "7.62x51mm M61": { "tier": 5, "category": "ammo" },
+    "7.62x51mm M62": { "tier": 3, "category": "ammo" },
+    "7.62x54mmR SNB": { "tier": 6, "category": "ammo" },
+    "7.62x54mmR LPS": { "tier": 3, "category": "ammo" },
+    ".45 ACP AP": { "tier": 4, "category": "ammo" },
+    "12x70mm RIP": { "tier": 1, "category": "ammo" },
+    "4.6x30mm AP SX": { "tier": 5, "category": "ammo" },
+    "5.7x28mm SS190": { "tier": 4, "category": "ammo" }
+  },
+  "tierColors": {
+    "1": "#c0c0c0",
+    "2": "#4ade80",
+    "3": "#3b82f6",
+    "4": "#a855f7",
+    "5": "#f4a261",
+    "6": "#ff4d5a"
+  },
+  "tierNames": {
+    "1": "白",
+    "2": "绿",
+    "3": "蓝",
+    "4": "紫",
+    "5": "金",
+    "6": "红"
+  },
+  "categories": ["ammo", "keycard", "attachment", "equipment", "other"]
+}

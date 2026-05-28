@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三角洲行动 · 交易助手</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Tab Navigation -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="dashboard">行情看板</button>
+  <button class="tab-btn" data-tab="advice">买卖建议</button>
+  <button class="tab-btn" data-tab="pnl">盈亏追踪</button>
+  <button class="tab-btn" data-tab="calendar">事件日历</button>
+  <button class="tab-btn" data-tab="ai">AI 分析</button>
+</nav>
+
+<!-- Tab 1: Dashboard -->
+<div class="tab-content active" id="tab-dashboard">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <span class="freshness fresh" id="freshnessBadge">数据加载中...</span>
+      <input type="text" class="input" id="searchInput" placeholder="搜索物品..." style="width:180px;">
+      <select class="select" id="categoryFilter">
+        <option value="all">全部分类</option>
+        <option value="ammo">弹药</option>
+        <option value="keycard">钥匙卡</option>
+        <option value="attachment">配件</option>
+        <option value="equipment">装备</option>
+        <option value="other">其他</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-primary" id="refreshBtn">刷新</button>
+    </div>
+  </div>
+  <div class="stats-row" id="dashboardStats"></div>
+  <div class="panel">
+    <table class="data-table" id="priceTable">
+      <thead>
+        <tr>
+          <th data-sort="name">物品名称</th>
+          <th data-sort="category">分类</th>
+          <th data-sort="price" class="num">当前价</th>
+          <th data-sort="low" class="num">24h最低</th>
+          <th data-sort="high" class="num">24h最高</th>
+          <th data-sort="change" class="num">涨跌幅</th>
+          <th class="center">操作</th>
+        </tr>
+      </thead>
+      <tbody id="priceTableBody"></tbody>
+    </table>
+  </div>
+  <div class="panel" id="detailPanel" style="display:none;">
+    <div class="section-header">
+      <span id="detailTitle">物品详情</span>
+      <div>
+        <button class="btn btn-sm btn-outline time-range-btn active" data-range="24h">24h</button>
+        <button class="btn btn-sm btn-outline time-range-btn" data-range="7d">7d</button>
+        <button class="btn btn-sm btn-outline time-range-btn" data-range="30d">30d</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div id="detailChart" style="height:320px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab 2: Advice -->
+<div class="tab-content" id="tab-advice">
+  <div class="stats-row" id="adviceStats"></div>
+  <div class="config-bar" id="adviceConfig">
+    <span style="color:var(--text-bright);font-weight:600;">提醒阈值</span>
+    <span>当价格偏离均线超过</span>
+    <input type="number" id="thresholdPct" value="15" min="1" max="50" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--text-bright);font-size:12px;">
+    <span>% 时弹出通知</span>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
+      <input type="checkbox" id="alertBuy" checked> 买入提醒
+    </label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
+      <input type="checkbox" id="alertSell" checked> 卖出提醒
+    </label>
+  </div>
+  <div class="panel">
+    <div class="section-header">交易信号 <span class="sub">基于24h均线 + 税费校验</span></div>
+    <table class="data-table" id="signalTable">
+      <thead>
+        <tr>
+          <th>物品</th>
+          <th class="num">当前价</th>
+          <th class="num">24h均线</th>
+          <th>24h 走势</th>
+          <th class="num">偏离</th>
+          <th>信号</th>
+          <th class="center">置信度</th>
+        </tr>
+      </thead>
+      <tbody id="signalTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 3: P&L -->
+<div class="tab-content" id="tab-pnl">
+  <div class="config-bar" id="taxConfig">
+    <span style="color:var(--text-bright);font-weight:600;">税费设置</span>
+    <span>保证金</span>
+    <input type="number" id="depositRate" value="3" min="0" max="20" step="0.5" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:12px;">
+    <span>% + 手续费</span>
+    <input type="number" id="feeRate" value="10" min="0" max="30" step="0.5" style="width:50px;padding:4px 6px;text-align:center;background:#1a1b1f;border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:12px;">
+    <span>% = 综合</span>
+    <span id="totalTaxRate" style="color:var(--red-bright);font-weight:600;">13%</span>
+    <span style="margin-left:auto;color:var(--green);font-size:11px;">盈亏 = 税后到手 - 成本</span>
+  </div>
+  <div class="stats-row" id="pnlStats"></div>
+  <div style="display:flex; gap:8px; margin-bottom:14px; align-items:center;">
+    <button class="btn btn-primary" id="addBuyBtn">+ 记录买入</button>
+    <button class="btn btn-outline" id="addSellBtn">+ 记录卖出</button>
+    <span style="margin-left:auto;font-size:12px;cursor:pointer;color:var(--text-dim);" id="exportBtn">导出 JSON ▾</span>
+    <span style="font-size:12px;cursor:pointer;color:var(--text-dim);" id="importBtn">导入 JSON</span>
+    <input type="file" id="importFile" accept=".json" style="display:none;">
+  </div>
+  <div class="panel">
+    <div class="section-header">当前持仓</div>
+    <table class="data-table" id="holdingsTable">
+      <thead>
+        <tr>
+          <th>物品</th>
+          <th class="num">持有量</th>
+          <th class="num">买入均价</th>
+          <th class="num">成本</th>
+          <th class="num">卖出标价</th>
+          <th class="num">税后到手</th>
+          <th class="num">税后盈亏</th>
+          <th class="center">操作</th>
+        </tr>
+      </thead>
+      <tbody id="holdingsTableBody"></tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <div class="section-header">交易记录</div>
+    <table class="data-table" id="tradeHistoryTable">
+      <thead>
+        <tr>
+          <th>时间</th>
+          <th>类型</th>
+          <th>物品</th>
+          <th class="num">数量</th>
+          <th class="num">单价</th>
+          <th class="num">总价</th>
+          <th class="num">盈亏</th>
+        </tr>
+      </thead>
+      <tbody id="tradeHistoryBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 4: Event Calendar -->
+<div class="tab-content" id="tab-calendar">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-sm btn-outline" id="calPrevMonth">◀</button>
+      <span id="calMonthLabel" style="font-size:16px;font-weight:700;color:var(--text-bright);min-width:160px;text-align:center;"></span>
+      <button class="btn btn-sm btn-outline" id="calNextMonth">▶</button>
+      <button class="btn btn-sm btn-outline" id="calToday">今天</button>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-primary btn-sm" id="addEventBtn">+ 添加事件</button>
+    </div>
+  </div>
+  <div class="calendar-grid" id="calendarGrid"></div>
+  <div class="panel" id="dayEventsPanel" style="display:none; margin-top:12px;">
+    <div class="section-header" id="dayEventsTitle">事件详情</div>
+    <div class="panel-body" id="dayEventsList"></div>
+  </div>
+</div>
+
+<!-- Tab 5: AI Analysis -->
+<div class="tab-content" id="tab-ai">
+  <div class="config-bar">
+    <span style="color:var(--text-bright);font-weight:600;">API 设置</span>
+    <span>Provider:</span>
+    <select class="select" id="aiProvider">
+      <option value="deepseek">DeepSeek</option>
+      <option value="openai">OpenAI</option>
+      <option value="anthropic">Anthropic</option>
+    </select>
+    <span>API Key:</span>
+    <input type="password" class="input" id="aiApiKey" placeholder="sk-..." style="width:200px;">
+    <button class="btn btn-sm btn-outline" id="saveApiKey">保存</button>
+    <span style="margin-left:auto;">
+      <button class="btn btn-sm btn-outline" id="exportReportBtn">导出分析报告</button>
+    </span>
+  </div>
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg assistant">
+        你好！我是交易分析助手。<br><br>
+        你可以问我：<br>
+        • "金弹现在该不该入？"<br>
+        • "哪种子弹最适合抄底？"<br>
+        • "帮我看看持仓哪些该卖了"<br>
+        • "最近有什么值得关注的波动？"<br><br>
+        也可以先点「导出分析报告」把数据粘贴给我。
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="input" id="chatInput" placeholder="输入问题..." style="flex:1;">
+      <button class="btn btn-primary" id="chatSend">发送</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modals (hidden by default) -->
+<div class="modal-overlay" id="tradeModal">
+  <div class="modal-box">
+    <h3 id="tradeModalTitle">记录交易</h3>
+    <label>物品名称</label>
+    <input type="text" class="input" id="tradeItemName" placeholder="输入物品名称...">
+    <label>数量</label>
+    <input type="number" class="input" id="tradeQty" value="1" min="1">
+    <label>单价（哈夫币）</label>
+    <input type="number" class="input" id="tradePrice" placeholder="0">
+    <label>交易类型</label>
+    <select class="select" id="tradeType">
+      <option value="buy">买入</option>
+      <option value="sell">卖出</option>
+    </select>
+    <div class="btn-row">
+      <button class="btn btn-outline" id="tradeCancel">取消</button>
+      <button class="btn btn-primary" id="tradeConfirm">确认</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="eventModal">
+  <div class="modal-box">
+    <h3 id="eventModalTitle">添加事件</h3>
+    <label>日期</label>
+    <input type="date" class="input" id="eventDate">
+    <label>标题</label>
+    <input type="text" class="input" id="eventTitle" placeholder="事件标题...">
+    <label>事件类型</label>
+    <select class="select" id="eventType">
+      <option value="update">版本更新</option>
+      <option value="season">赛季更替</option>
+      <option value="holiday">节假日活动</option>
+      <option value="weapon">武器调整</option>
+      <option value="restock">官方补货</option>
+      <option value="other">其他</option>
+    </select>
+    <label>影响描述</label>
+    <input type="text" class="input" id="eventDesc" placeholder="对价格的影响...">
+    <label>预期涨跌</label>
+    <select class="select" id="eventImpact">
+      <option value="up">预期上涨</option>
+      <option value="down">预期下跌</option>
+      <option value="neutral">不确定</option>
+    </select>
+    <label>影响幅度 %（可选）</label>
+    <input type="text" class="input" id="eventMagnitude" placeholder="如: 10-20">
+    <div class="btn-row">
+      <button class="btn btn-outline" id="eventCancel">取消</button>
+      <button class="btn btn-primary" id="eventConfirm">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ECharts CDN -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+<!-- App scripts -->
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/sparkline.js"></script>
+<script src="js/signals.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
