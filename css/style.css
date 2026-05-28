@@ -247,6 +247,7 @@ body {
 .calendar-day:hover { border-color: var(--text-dim); }
 .calendar-day.other-month { opacity: 0.3; }
 .calendar-day.today { border-color: var(--red); }
+.calendar-day.selected { border-color: var(--gold); background: rgba(255,200,50,0.08); }
 .calendar-day .day-num { font-weight: 600; font-size: 13px; }
 .calendar-day .event-dot {
   display: inline-block;
