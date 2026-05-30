@@ -116,6 +116,8 @@ const Storage = {
       alertBuy: true,
       alertSell: true,
       refreshInterval: 10,
+      apiKey: '',
+      clientID: '',
       aiProvider: 'deepseek',
       aiApiKey: ''
     });

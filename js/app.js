@@ -18,8 +18,9 @@ const App = {
 
   async refreshData() {
     try {
-      document.getElementById('freshnessBadge').textContent = '更新中...';
-      document.getElementById('freshnessBadge').className = 'freshness stale';
+      const badge = document.getElementById('freshnessBadge');
+      badge.textContent = '更新中...';
+      badge.className = 'freshness stale';
 
       const data = await Api.fetchPrices();
       Storage.appendPriceSnapshot(data);
@@ -31,21 +32,18 @@ const App = {
       this._renderPNL(data);
 
       const mins = Api.minutesSinceFetch();
-      const badge = document.getElementById('freshnessBadge');
-      badge.textContent = `数据更新于 ${mins} 分钟前`;
-      badge.className = mins <= 11 ? 'freshness fresh' : 'freshness stale';
+      if (Api.isDemo()) {
+        badge.textContent = '演示数据模式';
+        badge.className = 'freshness stale';
+      } else {
+        badge.textContent = `实时数据 · ${mins} 分钟前`;
+        badge.className = mins <= 11 ? 'freshness fresh' : 'freshness stale';
+      }
     } catch (e) {
       console.error('Data refresh failed:', e);
       const badge = document.getElementById('freshnessBadge');
-      badge.textContent = '数据加载失败，使用缓存数据';
+      badge.textContent = '数据加载失败';
       badge.className = 'freshness stale';
-
-      const cache = Api.getCache();
-      if (cache) {
-        this._renderDashboard(cache);
-        this._renderAdvice(cache);
-        this._renderPNL(cache);
-      }
     }
   },
 
@@ -313,6 +311,11 @@ const App = {
   _bindEvents() {
     document.getElementById('refreshBtn').addEventListener('click', () => this.refreshData());
 
+    const apiKeyEl = document.getElementById('apiKeyInput');
+    if (apiKeyEl) {
+      apiKeyEl.addEventListener('input', () => this._saveApiKey());
+    }
+
     document.getElementById('searchInput').addEventListener('input', () => {
       if (Api.getCache()) this._renderDashboard(Api.getCache());
     });
@@ -495,6 +498,17 @@ const App = {
     document.getElementById('alertSell').checked = cfg.alertSell !== false;
     document.getElementById('aiProvider').value = cfg.aiProvider || 'deepseek';
     document.getElementById('aiApiKey').value = cfg.aiApiKey || '';
+    const apiKeyEl = document.getElementById('apiKeyInput');
+    if (apiKeyEl) apiKeyEl.value = cfg.apiKey || '';
+  },
+
+  _saveApiKey() {
+    const el = document.getElementById('apiKeyInput');
+    if (!el) return;
+    Storage.setConfig({ apiKey: el.value.trim() });
+    // Debounce refresh to avoid rapid calls while typing
+    clearTimeout(this._apiKeyTimer);
+    this._apiKeyTimer = setTimeout(() => this.refreshData(), 600);
   },
 
   _startAutoRefresh() {
