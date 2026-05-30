@@ -13,6 +13,7 @@ const App = {
     this._loadConfig();
     await this.refreshData();
     this._startAutoRefresh();
+    Calendar.initEvents();
     Calendar.render();
   },
 
@@ -373,6 +374,13 @@ const App = {
     });
     document.getElementById('eventConfirm').addEventListener('click', () => this._confirmEvent());
 
+    document.getElementById('resetEventsBtn').addEventListener('click', () => {
+      if (confirm('确定重置所有事件？将清空现有事件并重新生成预设。')) {
+        Calendar.initEvents(true);
+        Calendar.render();
+        document.getElementById('dayEventsPanel').style.display = 'none';
+      }
+    });
     document.getElementById('calPrevMonth').addEventListener('click', () => Calendar.prevMonth());
     document.getElementById('calNextMonth').addEventListener('click', () => Calendar.nextMonth());
     document.getElementById('calToday').addEventListener('click', () => Calendar.goToday());
