@@ -5,8 +5,11 @@ const STORAGE_KEYS = {
   holdings: 'df_holdings',
   events: 'df_events',
   config: 'df_config',
-  priceHistory: 'df_price_history'
+  priceHistory: 'df_price_history',
+  _version: 'df_version'
 };
+
+const STORAGE_VERSION = 2; // bump when data format changes
 
 const Storage = {
   // --- Generic helpers ---
@@ -23,6 +26,22 @@ const Storage = {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
       console.warn('localStorage full, cannot save', key);
+    }
+  },
+  _remove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {}
+  },
+
+  /** Auto-migrate: clear stale data from older schema versions */
+  _migrate() {
+    const ver = this._get(STORAGE_KEYS._version, 0);
+    if (ver < STORAGE_VERSION) {
+      // Clear events (format changed) and config (new keys added)
+      this._remove(STORAGE_KEYS.events);
+      this._remove(STORAGE_KEYS.priceHistory);
+      this._set(STORAGE_KEYS._version, STORAGE_VERSION);
     }
   },
 
@@ -115,7 +134,7 @@ const Storage = {
       thresholdPct: 15,
       alertBuy: true,
       alertSell: true,
-      refreshInterval: 10,
+      refreshInterval: 2,
       apiKey: '',
       clientID: '',
       aiProvider: 'deepseek',

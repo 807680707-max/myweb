@@ -7,14 +7,27 @@ const App = {
   _selectedItem: null,
 
   async init() {
-    await Items.load();
-    this._bindTabs();
-    this._bindEvents();
-    this._loadConfig();
-    await this.refreshData();
-    this._startAutoRefresh();
-    Calendar.initEvents();
-    Calendar.render();
+    try {
+      Storage._migrate();
+      await Items.load();
+      this._bindTabs();
+      this._bindEvents();
+      this._loadConfig();
+      await this.refreshData();
+      this._startAutoRefresh();
+      Calendar.initEvents();
+      Calendar.render();
+    } catch (e) {
+      console.error('App init failed:', e);
+      const badge = document.getElementById('freshnessBadge');
+      if (badge) { badge.textContent = '错误: ' + e.message; badge.className = 'freshness stale'; }
+      try {
+        const data = await Api.fetchDemoData();
+        this._renderDashboard(data);
+        this._renderAdvice(data);
+        this._renderPNL(data);
+      } catch (e2) { /* silent */ }
+    }
   },
 
   async refreshData() {
@@ -32,14 +45,30 @@ const App = {
       this._renderAdvice(data);
       this._renderPNL(data);
 
+      // Count data points collected in 24h
+      const history = Storage.getPriceHistory();
+      let totalPoints = 0, itemsWithData = 0;
+      const DAY_MS = 86400000;
+      const now = Date.now();
+      for (const [name, pts] of Object.entries(history)) {
+        const recent = pts.filter(p => (now - new Date(p.t).getTime()) < DAY_MS);
+        if (recent.length > 0) { itemsWithData++; totalPoints += recent.length; }
+      }
+
       const mins = Api.minutesSinceFetch();
+      const itemCount = data.items ? data.items.length : 0;
       if (Api.isDemo()) {
-        badge.textContent = '演示数据模式';
+        badge.textContent = `演示模式 · ${itemCount}件物品`;
         badge.className = 'freshness stale';
       } else {
-        badge.textContent = `实时数据 · ${mins} 分钟前`;
-        badge.className = mins <= 11 ? 'freshness fresh' : 'freshness stale';
+        const avgPts = itemsWithData > 0 ? Math.round(totalPoints / itemsWithData) : 0;
+        badge.textContent = `实时数据 · ${mins}分前 · ${itemCount}件 · 均${avgPts}个数据点`;
+        badge.className = mins <= 3 ? 'freshness fresh' : 'freshness stale';
       }
+
+      // Reset countdown
+      this._nextRefreshIn = (Storage.getConfig().refreshInterval || 2) * 60;
+      this._updateCountdown();
     } catch (e) {
       console.error('Data refresh failed:', e);
       const badge = document.getElementById('freshnessBadge');
@@ -522,8 +551,25 @@ const App = {
   _startAutoRefresh() {
     if (this._refreshTimer) clearInterval(this._refreshTimer);
     const cfg = Storage.getConfig();
-    const interval = (cfg.refreshInterval || 10) * 60000;
+    const interval = (cfg.refreshInterval || 2) * 60000;
+    this._nextRefreshIn = (cfg.refreshInterval || 2) * 60;
+    this._updateCountdown();
     this._refreshTimer = setInterval(() => this.refreshData(), interval);
+    // Countdown tick every second
+    this._countdownTimer = setInterval(() => {
+      if (this._nextRefreshIn > 0) {
+        this._nextRefreshIn--;
+        this._updateCountdown();
+      }
+    }, 1000);
+  },
+
+  _updateCountdown() {
+    const el = document.getElementById('countdownBadge');
+    if (!el) return;
+    const m = Math.floor(this._nextRefreshIn / 60);
+    const s = this._nextRefreshIn % 60;
+    el.textContent = `下次刷新 ${m}:${String(s).padStart(2,'0')}`;
   },
 
   _fmtDate(iso) {

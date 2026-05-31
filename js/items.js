@@ -41,11 +41,6 @@ const Items = {
   },
 
   renderName(name) {
-    const color = this.getColor(name);
-    const tier = this.getTier(name);
-    const tierName = this.getTierName(name);
-    const dot = `<span class="tier-dot" style="background:${color};"></span>`;
-    const label = tier > 1 ? `<span class="badge" style="background:${color}22;color:${color};margin-left:4px;">${tier}级${tierName ? ' '+tierName : ''}</span>` : '';
-    return `${dot}<span style="color:${color};font-weight:700;">${name}</span>${label}`;
+    return `<span style="font-weight:600;">${name}</span>`;
   }
 };
